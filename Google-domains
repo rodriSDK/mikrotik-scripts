@@ -1,0 +1,40 @@
+:local GoogleUser "user"
+:local GooglePass "password"
+:local GoogleHost "my.domain.com"
+:local outputfile "scripts/register.txt"
+
+:local previousIP ""
+:local currentIP ""
+:local setResults ""
+
+:log info "Obteniendo ..."
+
+/ip cloud force-update
+:delay 5s;
+:set currentIP [/ip cloud get value-name=public-address]
+:log info "La direccion IP obtenida es: $currentIP"
+
+:log info "Obteniendo direccion de $GoogleHost ..."
+:set previousIP [:resolve "$GoogleHost"]
+:log info "La direccion IP obtenida es: $previousIP"
+
+:if ($currentIP !=$previousIP) do={
+	:log info "Google: Actualizacion necesaria"
+	:set previousIP $currentIP
+
+	:log info "Google: Enviando actualizacion para $GoogleHost ..."
+
+	/tool fetch url="https://$GoogleUser:$GooglePass@domains.google.com/nic/update?hostname=$GoogleHost&myip=$currentIP" mode=https dst-path=($outputfile)
+
+	:delay 5s;
+
+	:set setResults [/file get ($outputfile) contents];
+
+	:log info "Google: Actualizacion completa."
+
+	:log info "Google dijo esto: $setResults";
+
+	/file remove ($outputfile)
+
+} else={:log info "Google: La direccion anterior ($previousIP) y la IP actual ($currentIP) son iguales."
+}
