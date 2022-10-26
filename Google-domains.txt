@@ -1,3 +1,7 @@
+# Para evitar problemas solo editar las variables necesarias, GoogleUser, GooglePass, GoogleHost, dando énfasis a “outputfile” ya que este es la ubicación del
+# archivo de respuesta y necesario para la función de comparación, si se desea una ubicación personalizada seria solo modificarla por 
+# ejemplo “disk2/scripts/register.txt”
+
 :local GoogleUser "user"
 :local GooglePass "password"
 :local GoogleHost "my.domain.com"
