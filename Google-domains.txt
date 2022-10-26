@@ -5,7 +5,7 @@
 :local GoogleUser "user"
 :local GooglePass "password"
 :local GoogleHost "my.domain.com"
-:local outputfile "scripts/register.txt"
+:local outputfile "/scripts/register.txt"
 
 :local previousIP ""
 :local currentIP ""
